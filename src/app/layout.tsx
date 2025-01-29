@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ui/providers/ThemeProvider";
+import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,10 +39,15 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
-            <main className="px-4 sm:px-6 lg:px-8 min-h-screen">
-              {children}
-            </main>
+            <SignedIn>
+              <Navbar />
+              <main className="px-4 sm:px-6 lg:px-8 min-h-screen">
+                {children}
+              </main>
+            </SignedIn>
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
           </ThemeProvider>
         </body>
       </html>
