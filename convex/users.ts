@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
+// mutation for syncing users to db
 export const syncUser = mutation({
   args: {
     name: v.string(),
@@ -23,6 +24,7 @@ export const syncUser = mutation({
   },
 });
 
+// query for getting all the user
 export const getUsers = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -36,6 +38,7 @@ export const getUsers = query({
   },
 });
 
+// query for getting single user by clerk id
 export const getUserByClerkId = query({
   args: { clerkId: v.string() },
   handler: async (ctx, args) => {
