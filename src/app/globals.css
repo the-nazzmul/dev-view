@@ -81,3 +81,7 @@ body {
 .accent-bg-for-text {
   @apply bg-gradient-to-r from-[#9333ea] to-[#4f46e5] text-transparent bg-clip-text;
 }
+
+.custom-bg {
+  @apply bg-gradient-to-r from-[#9333ea] to-[#4f46e5];
+}
