@@ -15,5 +15,6 @@ export const useUserRole = () => {
     isLoading,
     isInterviewer: userData?.role === "interviewer",
     isCandidate: userData?.role === "candidate",
+    userData,
   };
 };

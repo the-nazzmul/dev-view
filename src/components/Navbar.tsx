@@ -14,9 +14,7 @@ const Navbar = () => {
           className="flex items-center gap-2 font-semibold text-2xl mr-6 font-mono hover:opacity-80 transition-opacity"
         >
           <Image src="/dev-view-logo.png" alt="logo" height={40} width={40} />
-          <span className="bg-gradient-to-r from-[#9333ea] to-[#4f46e5] text-transparent bg-clip-text">
-            DevView
-          </span>
+          <span className="accent-bg-for-text">DevView</span>
         </Link>
 
         {/* Action button */}
