@@ -3,11 +3,38 @@
 import ActionCard from "@/components/ActionCard";
 import { QUICK_ACTIONS } from "@/constants";
 import { useUserRole } from "@/hooks/useUserRole";
+import { useQuery } from "convex/react";
+import { useState } from "react";
+import { api } from "../../../../convex/_generated/api";
+import { useRouter } from "next/navigation";
+import MeetingModal from "@/components/MeetingModal";
 
 export default function Home() {
-  const { isInterviewer, isCandidate, isLoading, userData } = useUserRole();
+  const router = useRouter();
 
-  const handleQuickAction = (title: string) => {};
+  const { isInterviewer, isCandidate, isLoading, userData } = useUserRole();
+  const interviews = useQuery(api.interviews.getMyInterviews);
+
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<"start" | "join">();
+
+  const handleQuickAction = (title: string) => {
+    switch (title) {
+      case "New Call":
+        setModalType("start");
+        setShowModal(true);
+        break;
+      case "Join Interview":
+        setModalType("join");
+        setShowModal(true);
+        break;
+      default:
+        router.push(`/${title.toLowerCase()}`);
+    }
+  };
+
+  // TODO: Need to add a loader here
+  if (isLoading) return <p>loading...</p>;
 
   return (
     <div className="container max-w-7xl mx-auto p-6">
@@ -16,11 +43,9 @@ export default function Home() {
           Welcome back {userData?.name}!
         </h1>
         <p className="text-muted-foregorund mt-2">
-          {isLoading
-            ? ""
-            : isInterviewer
-              ? "Manage your interviews and review candidates effectively"
-              : "Access your upcoming interviews and preparations"}
+          {isInterviewer
+            ? "Manage your interviews and review candidates effectively"
+            : "Access your upcoming interviews and preparations"}
         </p>
       </div>
       {isInterviewer ? (
@@ -32,6 +57,12 @@ export default function Home() {
               onClick={() => handleQuickAction(action.title)}
             />
           ))}
+          <MeetingModal
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            title={modalType === "join" ? "Join Meeting" : "Start Meeting"}
+            isJoinMeeting={modalType === "join"}
+          />
         </div>
       ) : (
         <div>Candidate view</div>
