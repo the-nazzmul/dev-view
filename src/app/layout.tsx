@@ -1,9 +1,9 @@
-import ConvexClerkProvider from "@/components/ui/providers/ConvexClerkProvider";
+import ConvexClerkProvider from "@/components/providers/ConvexClerkProvider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { ThemeProvider } from "@/components/ui/providers/ThemeProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 
 const geistSans = localFont({
