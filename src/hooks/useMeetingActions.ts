@@ -25,7 +25,7 @@ const useMeetingActions = () => {
 
       router.push(`/meeting/${call.id}`);
       toast({
-        title: "Success",
+        title: "Success!",
         description: "Meeting created",
       });
     } catch (error) {
@@ -41,7 +41,7 @@ const useMeetingActions = () => {
     if (!client)
       return toast({
         variant: "destructive",
-        title: "Failed to join meeting. Please try again.",
+        title: "Failed to join meeting! Please try again.",
       });
     router.push(`/meeting/${callId}`);
   };
