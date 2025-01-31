@@ -15,6 +15,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-switch": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.5",
+    "@stream-io/audio-filters-web": "^0.2.2",
     "@stream-io/node-sdk": "^0.4.11",
     "@stream-io/video-react-sdk": "^1.10.6",
     "class-variance-authority": "^0.7.1",

@@ -5,13 +5,20 @@ import MeetingRoom from "@/components/MeetingRoom";
 import MeetingSetup from "@/components/MeetingSetup";
 import useGetCallById from "@/hooks/useGetCallById";
 import { useUser } from "@clerk/nextjs";
-import { StreamCall, StreamTheme } from "@stream-io/video-react-sdk";
+import { NoiseCancellation } from "@stream-io/audio-filters-web";
+import {
+  BackgroundFiltersProvider,
+  NoiseCancellationProvider,
+  StreamCall,
+  StreamTheme,
+} from "@stream-io/video-react-sdk";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const MeetingPage = () => {
   const { id } = useParams();
   const { isLoaded } = useUser();
+  const noiseCancellation = useMemo(() => new NoiseCancellation(), []);
 
   const { call, isCallLoading } = useGetCallById(id);
   const [isSetupComplete, setIsSetupComplete] = useState<boolean>(false);
@@ -28,13 +35,17 @@ const MeetingPage = () => {
 
   return (
     <StreamCall call={call}>
-      <StreamTheme>
-        {!isSetupComplete ? (
-          <MeetingSetup onSetupComplete={() => setIsSetupComplete(true)} />
-        ) : (
-          <MeetingRoom />
-        )}
-      </StreamTheme>
+      <BackgroundFiltersProvider backgroundFilter="blur">
+        <NoiseCancellationProvider noiseCancellation={noiseCancellation}>
+          <StreamTheme>
+            {!isSetupComplete ? (
+              <MeetingSetup onSetupComplete={() => setIsSetupComplete(true)} />
+            ) : (
+              <MeetingRoom />
+            )}
+          </StreamTheme>
+        </NoiseCancellationProvider>
+      </BackgroundFiltersProvider>
     </StreamCall>
   );
 };

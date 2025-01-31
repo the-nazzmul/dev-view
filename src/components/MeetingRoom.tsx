@@ -7,7 +7,7 @@ import {
   SpeakerLayout,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
-import { LayoutListIcon, LoaderIcon, Users, UsersIcon } from "lucide-react";
+import { LayoutListIcon, LoaderIcon, UsersIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -21,6 +21,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "./ui/resizable";
+import { BackgroundSettings } from "./call-control/BackgroundSetting";
+import { NoiseCancellationBtn } from "./call-control/NoiseCancellationBtn";
 
 const MeetingRoom = () => {
   const router = useRouter();
@@ -43,9 +45,10 @@ const MeetingRoom = () => {
     <div className="h-[calc(100vh-4rem-1px)]">
       <ResizablePanelGroup direction="horizontal">
         {/* Video call */}
+
         <ResizablePanel
           defaultSize={50}
-          minSize={25}
+          minSize={50}
           maxSize={75}
           className="relative"
         >
@@ -67,6 +70,11 @@ const MeetingRoom = () => {
               <div className="flex items-center gap-2 flex-wrap justify-center px-4">
                 <CallControls onLeave={() => router.push("/")} />
                 <div className="flex items-center gap-2">
+                  {/* background control */}
+                  <BackgroundSettings />
+                  {/* Noise cancellation */}
+                  <NoiseCancellationBtn />
+                  {/* layout control */}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="icon" className="size-10">
@@ -82,6 +90,7 @@ const MeetingRoom = () => {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
+                  {/* participant control */}
                   <Button
                     variant="outline"
                     size="icon"
@@ -96,6 +105,7 @@ const MeetingRoom = () => {
             </div>
           </div>
         </ResizablePanel>
+
         {/* handle to resize components */}
         <ResizableHandle withHandle />
         {/* Code editor */}
