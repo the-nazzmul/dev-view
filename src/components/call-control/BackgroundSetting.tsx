@@ -12,6 +12,8 @@ export const BackgroundSettings = () => {
   const {
     disableBackgroundFilter, // disables the filter
     applyBackgroundBlurFilter, // applies the blur filter
+    applyBackgroundImageFilter, // applies the image filter
+    backgroundImages, // list of available images
   } = useBackgroundFilters();
 
   return (
@@ -26,16 +28,26 @@ export const BackgroundSettings = () => {
           Turn Off
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => applyBackgroundBlurFilter("high")}>
-          High
+          High Blur
         </DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => applyBackgroundBlurFilter("medium")}>
-          Medium
+          Medium Blur
         </DropdownMenuItem>
 
         <DropdownMenuItem onClick={() => applyBackgroundBlurFilter("low")}>
-          Low
+          Low Blur
         </DropdownMenuItem>
+        <ul>
+          {backgroundImages!.map((image, index) => (
+            <DropdownMenuItem
+              key={image}
+              onClick={() => applyBackgroundImageFilter(image)}
+            >
+              {"Background" + " " + `${index + 1}`}
+            </DropdownMenuItem>
+          ))}
+        </ul>
       </DropdownMenuContent>
     </DropdownMenu>
   );

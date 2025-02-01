@@ -35,7 +35,15 @@ const MeetingPage = () => {
 
   return (
     <StreamCall call={call}>
-      <BackgroundFiltersProvider backgroundFilter="blur">
+      <BackgroundFiltersProvider
+        backgroundFilter="blur"
+        backgroundImages={[
+          "http://localhost:3000/bg/library.jpg",
+          "http://localhost:3000/bg/fireplace.jpg",
+          "http://localhost:3000/bg/living-room.jpg",
+          "http://localhost:3000/bg/office.jpg",
+        ]}
+      >
         <NoiseCancellationProvider noiseCancellation={noiseCancellation}>
           <StreamTheme>
             {!isSetupComplete ? (
