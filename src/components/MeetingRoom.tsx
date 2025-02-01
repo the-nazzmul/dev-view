@@ -23,6 +23,7 @@ import {
 } from "./ui/resizable";
 import { BackgroundSettings } from "./call-control/BackgroundSetting";
 import { NoiseCancellationBtn } from "./call-control/NoiseCancellationBtn";
+import EndcallBtn from "./EndcallBtn";
 
 const MeetingRoom = () => {
   const router = useRouter();
@@ -57,7 +58,7 @@ const MeetingRoom = () => {
             {layout === "grid" ? <PaginatedGridLayout /> : <SpeakerLayout />}
             {/* Participants list */}
             {showParticipants && (
-              <div className="absolute right-0 top-0 h-full w-[300px] bg-background/95 backdrop-blur supports-[backdrop-fi;ter]:bg-background/60">
+              <div className="absolute right-0 top-0 h-full w-[300px] p-4 bg-background/95 backdrop-blur supports-[backdrop-fi;ter]:bg-background/60">
                 <CallParticipantsList
                   onClose={() => setShowParticipants(false)}
                 />
@@ -99,7 +100,7 @@ const MeetingRoom = () => {
                   >
                     <UsersIcon className="h-4 w-4" />
                   </Button>
-                  <Button>end call</Button>
+                  <EndcallBtn />
                 </div>
               </div>
             </div>
