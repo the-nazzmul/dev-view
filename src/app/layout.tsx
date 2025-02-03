@@ -43,9 +43,7 @@ export default function RootLayout({
           >
             <SignedIn>
               <Navbar />
-              <main className="px-4 sm:px-6 lg:px-8 min-h-screen">
-                {children}
-              </main>
+              <main className="px-4 sm:px-6 lg:px-8">{children}</main>
             </SignedIn>
             <SignedOut>
               <RedirectToSignIn />

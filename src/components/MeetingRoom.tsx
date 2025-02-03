@@ -24,6 +24,7 @@ import {
 import { BackgroundSettings } from "./call-control/BackgroundSetting";
 import { NoiseCancellationBtn } from "./call-control/NoiseCancellationBtn";
 import EndcallBtn from "./EndcallBtn";
+import CodeEditor from "./CodeEditor";
 
 const MeetingRoom = () => {
   const router = useRouter();
@@ -111,7 +112,7 @@ const MeetingRoom = () => {
         <ResizableHandle withHandle />
         {/* Code editor */}
         <ResizablePanel defaultSize={50} minSize={25}>
-          <h1>Code editor</h1>
+          <CodeEditor />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
