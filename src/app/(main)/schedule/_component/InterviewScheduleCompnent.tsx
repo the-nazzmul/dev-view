@@ -22,6 +22,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import UserInfo from "@/components/UserInfo";
+import { Loader2Icon, XIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { TIME_SLOTS } from "@/constants";
+import MeetingCard from "@/components/MeetingCard";
 
 const InterviewScheduleCompnent = () => {
   const client = useStreamVideoClient();
@@ -29,8 +33,8 @@ const InterviewScheduleCompnent = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
 
-  const interviews = useQuery(api.interviews.getAllInterviews);
-  const users = useQuery(api.users.getUsers);
+  const interviews = useQuery(api.interviews.getAllInterviews) ?? [];
+  const users = useQuery(api.users.getUsers) ?? [];
   const createInterview = useMutation(api.interviews.createInterview);
 
   const candidates = users?.filter((c) => c.role === "candidate");
@@ -40,7 +44,7 @@ const InterviewScheduleCompnent = () => {
     title: "",
     description: "",
     date: new Date(),
-    time: "9:00",
+    time: "09:00",
     candidateId: "",
     interviewerIds: user?.id ? [user.id] : [],
   });
@@ -196,10 +200,118 @@ const InterviewScheduleCompnent = () => {
                   </SelectContent>
                 </Select>
               </div>
+              {/* Interviewers */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Interviewers</label>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {selectedInterviewers.map((interviewer) => (
+                    <div
+                      key={interviewer.clerkId}
+                      className="inline-flex items-center gap-2 bg-secondary px-2 py-1 rounded-md text-sm"
+                    >
+                      <UserInfo user={interviewer} />
+                      {interviewer.clerkId !== user?.id && (
+                        <button
+                          onClick={() => removeInterviewer(interviewer.clerkId)}
+                          className="hover:text-destructive transition-colors"
+                        >
+                          <XIcon className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {availableInterviewers.length > 0 && (
+                  <Select onValueChange={addInterviewer}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Add interviewer" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableInterviewers.map((interviewer) => (
+                        <SelectItem
+                          key={interviewer.clerkId}
+                          value={interviewer.clerkId}
+                        >
+                          <UserInfo user={interviewer} />
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
+              {/* Date and Time */}
+              <div className="flex gap-4">
+                {/* Calendar */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Date</label>
+                  <Calendar
+                    mode="single"
+                    selected={formData.date}
+                    onSelect={(date) =>
+                      date && setFormData({ ...formData, date })
+                    }
+                    disabled={(date) => date < new Date()}
+                    className="rounded-md border"
+                  />
+                </div>
+                {/* Time */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Time</label>
+                  <Select
+                    value={formData.time}
+                    onValueChange={(time) => setFormData({ ...formData, time })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select time" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TIME_SLOTS.map((time) => (
+                        <SelectItem key={time} value={time}>
+                          {time}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              {/* ACTION BUTTONS */}
+              <div className="flex justify-end gap-3 pt-4">
+                <Button variant="outline" onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={scheduleMeeting} disabled={isCreating}>
+                  {isCreating ? (
+                    <>
+                      <Loader2Icon className="mr-2 size-4 animate-spin" />
+                      Scheduling...
+                    </>
+                  ) : (
+                    "Schedule Interview"
+                  )}
+                </Button>
+              </div>
             </div>
           </DialogContent>
         </Dialog>
       </div>
+      {/* Loading state and meeting card */}
+      {!interviews ? (
+        <div className="flex justify-center py-12">
+          <Loader2Icon className="size-8 animate-spin text-muted-foreground" />
+        </div>
+      ) : interviews.length > 0 ? (
+        <div className="spacey-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {interviews.map((interview) => (
+              <MeetingCard key={interview._id} interview={interview} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="text-center py-12 text-muted-foreground">
+          No interviews scheduled
+        </div>
+      )}
     </div>
   );
 };
