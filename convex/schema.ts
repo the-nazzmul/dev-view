@@ -14,6 +14,7 @@ export default defineSchema({
     title: v.string(),
     description: v.optional(v.string()),
     startTime: v.number(),
+    duration: v.number(),
     endTime: v.optional(v.number()),
     status: v.string(),
     streamCallId: v.string(),

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clsx, type ClassValue } from "clsx";
 import {
-  addHours,
+  addMinutes,
   intervalToDuration,
   isAfter,
   isBefore,
@@ -88,8 +89,17 @@ export const calculateRecordingDuration = (
 export const getMeetingStatus = (interview: Interview) => {
   const now = new Date();
   const interviewStartTime = interview.startTime;
-  const endTime = addHours(interviewStartTime, 1);
+  const endTime = addMinutes(interviewStartTime, interview.duration);
+  const fiveMinutesBeforeStart = addMinutes(interviewStartTime, -5);
 
+  if (
+    isWithinInterval(now, {
+      start: fiveMinutesBeforeStart,
+      end: interviewStartTime,
+    })
+  ) {
+    return "joinable";
+  }
   if (
     interview.status === "completed" ||
     interview.status === "failed" ||

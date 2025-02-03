@@ -24,8 +24,9 @@ import {
 import UserInfo from "@/components/UserInfo";
 import { Loader2Icon, XIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-import { TIME_SLOTS } from "@/constants";
+import { MEETING_DURATIONS, TIME_SLOTS } from "@/constants";
 import MeetingCard from "@/components/MeetingCard";
+import { addMinutes } from "date-fns";
 
 const InterviewScheduleCompnent = () => {
   const client = useStreamVideoClient();
@@ -45,6 +46,7 @@ const InterviewScheduleCompnent = () => {
     description: "",
     date: new Date(),
     time: "09:00",
+    duration: 30,
     candidateId: "",
     interviewerIds: user?.id ? [user.id] : [],
   });
@@ -61,11 +63,21 @@ const InterviewScheduleCompnent = () => {
 
     setIsCreating(true);
     try {
-      const { title, description, date, time, candidateId, interviewerIds } =
-        formData;
+      const {
+        title,
+        description,
+        date,
+        time,
+        candidateId,
+        interviewerIds,
+        duration,
+      } = formData;
+
       const [hours, minutes] = time.split(":");
       const meetingDate = new Date(date);
       meetingDate.setHours(parseInt(hours), parseInt(minutes), 0);
+
+      const endTime = addMinutes(meetingDate, duration).getTime();
 
       const id = crypto.randomUUID();
       const call = client.call("default", id);
@@ -84,6 +96,8 @@ const InterviewScheduleCompnent = () => {
         title,
         description,
         startTime: meetingDate.getTime(),
+        duration,
+        endTime,
         status: "upcoming",
         streamCallId: id,
         candidateId,
@@ -98,6 +112,7 @@ const InterviewScheduleCompnent = () => {
         description: "",
         date: new Date(),
         time: "09:00",
+        duration: 30,
         candidateId: "",
         interviewerIds: user?.id ? [user.id] : [],
       });
@@ -121,7 +136,7 @@ const InterviewScheduleCompnent = () => {
     if (interviewerId === user?.id) return;
     setFormData((prev) => ({
       ...prev,
-      interviewerIds: [...prev.interviewerIds, interviewerId],
+      interviewerIds: prev.interviewerIds.filter((id) => id !== interviewerId),
     }));
   };
 
@@ -254,7 +269,8 @@ const InterviewScheduleCompnent = () => {
                     className="rounded-md border"
                   />
                 </div>
-                {/* Time */}
+                {/* Time and duration */}
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Time</label>
                   <Select
@@ -268,6 +284,27 @@ const InterviewScheduleCompnent = () => {
                       {TIME_SLOTS.map((time) => (
                         <SelectItem key={time} value={time}>
                           {time}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                {/* Duration */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Minutes</label>
+                  <Select
+                    value={formData.duration.toString()}
+                    onValueChange={(duration) =>
+                      setFormData({ ...formData, duration: Number(duration) })
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select duration" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {MEETING_DURATIONS.map((duration) => (
+                        <SelectItem key={duration} value={String(duration)}>
+                          {duration}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -294,6 +331,7 @@ const InterviewScheduleCompnent = () => {
           </DialogContent>
         </Dialog>
       </div>
+
       {/* Loading state and meeting card */}
       {!interviews ? (
         <div className="flex justify-center py-12">
