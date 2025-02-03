@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { CODING_QUESTIONS, LANGUAGES } from "@/constants";
 import { useState } from "react";
 import {
@@ -75,16 +76,15 @@ const CodeEditor = () => {
                   </Select>
 
                   <Select value={language} onValueChange={handleLanguageChange}>
-                    <SelectTrigger className="w-[150px]">
+                    <SelectTrigger className="w-[50px]">
                       {/* SELECT VALUE */}
                       <SelectValue>
-                        <div className="flex items-center gap-2">
+                        <div>
                           <img
                             src={`/${language}.png`}
                             alt={language}
                             className="w-5 h-5 object-contain"
                           />
-                          {LANGUAGES.find((l) => l.id === language)?.name}
                         </div>
                       </SelectValue>
                     </SelectTrigger>
@@ -141,7 +141,7 @@ const CodeEditor = () => {
                               <div>Input: {example.input}</div>
                               <div>Output: {example.output}</div>
                               {example.explanation && (
-                                <div className="pt-2 text-muted-foreground">
+                                <div className="pt-2 text-muted-foreground text-wrap">
                                   Explanation: {example.explanation}
                                 </div>
                               )}

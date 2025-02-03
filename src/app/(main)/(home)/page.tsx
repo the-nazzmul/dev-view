@@ -8,6 +8,7 @@ import { useState } from "react";
 import { api } from "../../../../convex/_generated/api";
 import { useRouter } from "next/navigation";
 import MeetingModal from "@/components/MeetingModal";
+import LoaderComponent from "@/components/LoaderComponent";
 
 export default function Home() {
   const router = useRouter();
@@ -34,7 +35,7 @@ export default function Home() {
   };
 
   // TODO: Need to add a loader here
-  if (isLoading) return <p>loading...</p>;
+  if (isLoading) return <LoaderComponent />;
 
   return (
     <div className="container max-w-7xl mx-auto p-6">
