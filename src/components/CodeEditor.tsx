@@ -190,6 +190,7 @@ const CodeEditor = () => {
             defaultLanguage={language}
             language={language}
             theme="vs-dark"
+            value={code}
             onChange={(value) => setCode(value || "")}
             options={{
               minimap: { enabled: false },

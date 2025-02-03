@@ -51,7 +51,7 @@ const MeetingRoom = () => {
         <ResizablePanel
           defaultSize={50}
           minSize={50}
-          maxSize={75}
+          maxSize={55}
           className="relative"
         >
           {/* Video Layout */}
@@ -111,7 +111,7 @@ const MeetingRoom = () => {
         {/* handle to resize components */}
         <ResizableHandle withHandle />
         {/* Code editor */}
-        <ResizablePanel defaultSize={50} minSize={25}>
+        <ResizablePanel defaultSize={50} minSize={45}>
           <CodeEditor />
         </ResizablePanel>
       </ResizablePanelGroup>
