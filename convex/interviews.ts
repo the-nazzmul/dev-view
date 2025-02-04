@@ -75,7 +75,6 @@ export const updateInterviewStatus = mutation({
   handler: async (ctx, args) => {
     return await ctx.db.patch(args.id, {
       status: args.status,
-      ...(args.status === "completed" ? { endTime: Date.now() } : {}),
     });
   },
 });
