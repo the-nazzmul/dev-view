@@ -41,7 +41,6 @@ export const TIME_SLOTS = [
 ];
 
 export const MEETING_DURATIONS = [15, 20, 30, 45, 60];
-// export const MEETING_DURATIONS = ["00:15", "00:20", "00:30", "00:45", "00:60"];
 
 export const QUICK_ACTIONS = [
   {
