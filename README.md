@@ -1,8 +1,3 @@
-⚠️ **Security Warning**: You have shared sensitive credentials in your `.env` file, including API keys, database URLs, and secret keys. You should **immediately revoke and regenerate** these credentials to prevent unauthorized access to your project. Never expose your environment variables publicly. 
-
-Now, I'll generate a comprehensive `README.md` file for your **CasePix** project.  
-
----
 
 # CasePix
 
