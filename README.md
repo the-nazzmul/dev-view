@@ -1,4 +1,4 @@
-# ![DevView](/dev-view-thumbnail.png)
+# ![DevView](https://raw.githubusercontent.com/the-nazzmul/dev-view/refs/heads/main/public/dev-view-thumbnail.png)
 
 # DevView
 
