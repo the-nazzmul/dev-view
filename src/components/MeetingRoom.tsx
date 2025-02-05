@@ -74,7 +74,7 @@ const MeetingRoom = () => {
               <div className="flex items-center gap-2 flex-wrap justify-center px-4">
                 <CallControls
                   onLeave={() => {
-                    call?.endCall();
+                    call?.leave();
                     router.push("/");
                   }}
                 />
