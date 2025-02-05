@@ -2,7 +2,7 @@
 "use client";
 
 import ActionCard from "@/components/ActionCard";
-import { QUICK_ACTIONS } from "@/constants";
+import { QUICK_ACTIONS, QUICK_ACTIONS_FOR_CANDIDATE } from "@/constants";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useQuery } from "convex/react";
 import { useState } from "react";
@@ -37,7 +37,6 @@ export default function Home() {
     }
   };
 
-  // TODO: Need to add a loader here
   if (isLoading) return <LoaderComponent />;
 
   return (
@@ -76,17 +75,39 @@ export default function Home() {
               View and join your scheduled interviews
             </p>
           </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {QUICK_ACTIONS_FOR_CANDIDATE.map((action) => (
+              <ActionCard
+                key={action.title}
+                action={action}
+                onClick={() => handleQuickAction(action.title)}
+              />
+            ))}
+            <MeetingModal
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+              title={modalType === "join" ? "Join Meeting" : "Start Meeting"}
+              isJoinMeeting={modalType === "join"}
+            />
+          </div>
           <div className="mt-8">
             {interviews === undefined ? (
               <div className="flex justify-center py-12">
                 <Loader2Icon className="size-8 animate-spin text-muted-foreground" />
               </div>
             ) : interviews.length > 0 ? (
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {interviews.map((interview) => (
-                  <MeetingCard key={interview._id} interview={interview} />
-                ))}
-              </div>
+              <>
+                <h2 className="text-2xl font-bold">
+                  Your Scheduled interviews
+                </h2>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-6">
+                  <>
+                    {interviews.map((interview) => (
+                      <MeetingCard key={interview._id} interview={interview} />
+                    ))}
+                  </>
+                </div>
+              </>
             ) : (
               <div className="text-center py-12 text-muted-foreground">
                 You have no scheduled interviews

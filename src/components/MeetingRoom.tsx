@@ -5,7 +5,6 @@ import {
   CallParticipantsList,
   PaginatedGridLayout,
   SpeakerLayout,
-  useCall,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 import { LayoutListIcon, LoaderIcon, UsersIcon } from "lucide-react";
@@ -28,7 +27,6 @@ import CodeEditor from "./CodeEditor";
 import RegisterInterview from "./RegisterInterview";
 
 const MeetingRoom = () => {
-  const call = useCall();
   const router = useRouter();
   const [layout, setLayout] = useState<"grid" | "speaker">("speaker");
   const [showParticipants, setShowParticipants] = useState<boolean>(false);
@@ -52,8 +50,8 @@ const MeetingRoom = () => {
 
         <ResizablePanel
           defaultSize={50}
-          minSize={25}
-          maxSize={75}
+          minSize={50}
+          maxSize={55}
           className="relative"
         >
           {/* Video Layout */}
@@ -74,7 +72,6 @@ const MeetingRoom = () => {
               <div className="flex items-center gap-2 flex-wrap justify-center px-4">
                 <CallControls
                   onLeave={() => {
-                    call?.leave();
                     router.push("/");
                   }}
                 />
@@ -118,7 +115,7 @@ const MeetingRoom = () => {
         {/* handle to resize components */}
         <ResizableHandle withHandle />
         {/* Code editor */}
-        <ResizablePanel defaultSize={50} minSize={25}>
+        <ResizablePanel defaultSize={50} minSize={45}>
           <CodeEditor />
         </ResizablePanel>
       </ResizablePanelGroup>

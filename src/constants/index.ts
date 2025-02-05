@@ -72,6 +72,22 @@ export const QUICK_ACTIONS = [
     gradient: "from-orange-500/25 via-orange-500/10 to-transparent",
   },
 ];
+export const QUICK_ACTIONS_FOR_CANDIDATE = [
+  {
+    icon: Code2,
+    title: "New Call",
+    description: "Start an instant call",
+    color: "primary",
+    gradient: "from-primary/25 via-primary/10 to-transparent",
+  },
+  {
+    icon: Users,
+    title: "Join Interview",
+    description: "Enter via invitation link",
+    color: "purple-500",
+    gradient: "from-indigo-500/25 via-indigo-500/10 to-transparent",
+  },
+];
 
 export const CODING_QUESTIONS: CodeQuestion[] = [
   {
