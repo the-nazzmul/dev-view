@@ -25,6 +25,7 @@ import {
   XCircleIcon,
 } from "lucide-react";
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
 
 type Interview = Doc<"interviews">;
 
@@ -32,6 +33,22 @@ const DashboardPage = () => {
   const users = useQuery(api.users.getUsers);
   const interviews = useQuery(api.interviews.getAllInterviews);
   const updateStatus = useMutation(api.interviews.updateInterviewStatus);
+
+  const [groupedInterviews, setGroupedInterviews] = useState<
+    Record<string, Interview[]>
+  >({});
+
+  useEffect(() => {
+    if (!interviews) return;
+    const groupData = async () => {
+      const result = await groupInterviews(interviews, updateStatus);
+      setGroupedInterviews(result);
+    };
+
+    if (interviews) {
+      groupData();
+    }
+  }, [interviews, updateStatus]);
 
   const handleStatusUpdate = async (
     interviewId: Id<"interviews">,
@@ -47,8 +64,6 @@ const DashboardPage = () => {
   };
 
   if (!interviews || !users) return <LoaderComponent />;
-
-  const groupedInterviews = groupInterviews(interviews);
 
   return (
     <div className="container mx-auto py-10">

@@ -17,25 +17,45 @@ export function cn(...inputs: ClassValue[]) {
 type Interview = Doc<"interviews">;
 type User = Doc<"users">;
 
-export const groupInterviews = (interviews: Interview[]) => {
-  if (!interviews) return {};
+export const groupInterviews = async (
+  interviews: Interview[],
+  updateStatus: any
+) => {
+  if (!interviews || interviews.length === 0) return {};
 
-  return interviews.reduce((acc: any, interview: Interview) => {
-    const date = new Date(interview.startTime);
-    const now = new Date();
+  const now = new Date();
+  const updates: Promise<void>[] = [];
+
+  const grouped: Record<string, Interview[]> = {
+    succeeded: [],
+    failed: [],
+    completed: [],
+    upcoming: [],
+  };
+
+  for (const interview of interviews) {
+    const endTime = new Date(interview.endTime!);
 
     if (interview.status === "succeeded") {
-      acc.succeeded = [...(acc.succeeded || []), interview];
+      grouped.succeeded.push(interview);
     } else if (interview.status === "failed") {
-      acc.failed = [...(acc.failed || []), interview];
-    } else if (isBefore(date, now)) {
-      acc.completed = [...(acc.completed || []), interview];
-    } else if (isAfter(date, now)) {
-      acc.upcoming = [...(acc.upcoming || []), interview];
+      grouped.failed.push(interview);
+    } else if (isBefore(endTime, now)) {
+      if (interview.status !== "completed") {
+        updates.push(updateStatus({ id: interview._id, status: "completed" }));
+        grouped.completed.push({ ...interview, status: "completed" });
+      } else {
+        grouped.completed.push(interview);
+      }
+    } else if (isAfter(endTime, now)) {
+      grouped.upcoming.push(interview);
     }
+  }
 
-    return acc;
-  }, {});
+  // Execute all status updates for completed interviews
+  await Promise.all(updates);
+
+  return grouped;
 };
 
 export const getCandidateInfo = (users: User[], candidateId: string) => {
@@ -111,3 +131,29 @@ export const getMeetingStatus = (interview: Interview) => {
   if (isBefore(now, interviewStartTime)) return "upcoming";
   return "completed";
 };
+
+// if (!interviews) return {};
+
+// const updates: Promise<void>[] = [];
+
+// const grouped = interviews.reduce((acc: any, interview: Interview) => {
+//   const date = new Date(interview.endTime!);
+//   const now = new Date();
+
+//   if (interview.status === "succeeded") {
+//     acc.succeeded = [...(acc.succeeded || []), interview];
+//   } else if (interview.status === "failed") {
+//     acc.failed = [...(acc.failed || []), interview];
+//   } else if (isBefore(date, now)) {
+//     updates.push(updateStatus({ id: interview._id, status: "completed" }));
+//     acc.completed = [...(acc.completed || []), interview];
+//   } else if (isAfter(date, now)) {
+//     acc.upcoming = [...(acc.upcoming || []), interview];
+//   }
+
+//   return acc;
+// }, {});
+
+// await Promise.all(updates);
+
+// return grouped;
