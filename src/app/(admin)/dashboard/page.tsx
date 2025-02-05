@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
+import CommentDialog from "@/components/CommentDialog";
 
 type Interview = Doc<"interviews">;
 
@@ -94,7 +95,7 @@ const DashboardPage = () => {
                       const startTime = new Date(interview.startTime);
                       return (
                         <Card
-                          className="hover:shadow-md transition-all"
+                          className="hover:shadow-md transition-all bg-secondary"
                           key={interview._id}
                         >
                           {/* Candidate Info */}
@@ -161,6 +162,7 @@ const DashboardPage = () => {
                                 </Button>
                               </div>
                             )}
+                            <CommentDialog interviewId={interview._id} />
                           </CardFooter>
                         </Card>
                       );
