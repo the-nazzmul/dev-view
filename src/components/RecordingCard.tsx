@@ -14,7 +14,7 @@ const RecordingCard = ({ recording }: { recording: CallRecording }) => {
       toast({
         title: "Recording link copied to clipboard",
       });
-    } catch (error) {
+    } catch {
       toast({
         variant: "destructive",
         title: "Failes to copy link to clipboard",

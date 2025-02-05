@@ -77,6 +77,7 @@ const CommentDialog = ({ interviewId }: { interviewId: Id<"interviews"> }) => {
       <DialogTrigger asChild>
         <Button variant="secondary" className="w-full">
           <MessageSquareIcon className="size-4 mr-2" />
+          Add Comment
         </Button>
       </DialogTrigger>
 
