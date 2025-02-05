@@ -1,4 +1,4 @@
-# ![DevView](./dev-view-thumbnail.png)
+# ![DevView](/dev-view-thumbnail.png)
 
 # DevView
 
@@ -120,4 +120,4 @@ This will start the development server on `http://localhost:3000`.
 For support or feedback, reach out at:
 
 - **Email**: nazmul.hussain.utchash@gmail.com
-- **GitHub**: [yourusername](https://github.com/the-nazzmul)
+- **GitHub**: [the-nazzmul](https://github.com/the-nazzmul)
