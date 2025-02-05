@@ -23,8 +23,8 @@ import {
 } from "./ui/resizable";
 import { BackgroundSettings } from "./call-control/BackgroundSetting";
 import { NoiseCancellationBtn } from "./call-control/NoiseCancellationBtn";
-import EndcallBtn from "./EndcallBtn";
 import CodeEditor from "./CodeEditor";
+import RegisterInterview from "./RegisterInterview";
 
 const MeetingRoom = () => {
   const router = useRouter();
@@ -101,7 +101,7 @@ const MeetingRoom = () => {
                   >
                     <UsersIcon className="h-4 w-4" />
                   </Button>
-                  <EndcallBtn />
+                  <RegisterInterview />
                 </div>
               </div>
             </div>

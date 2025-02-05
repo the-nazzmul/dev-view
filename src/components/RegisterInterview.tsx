@@ -5,7 +5,7 @@ import { api } from "../../convex/_generated/api";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-const EndcallBtn = () => {
+const RegisterInterview = () => {
   const call = useCall();
   const router = useRouter();
   const { toast } = useToast();
@@ -45,9 +45,9 @@ const EndcallBtn = () => {
 
   return (
     <Button variant="destructive" onClick={endCall}>
-      End Meeting
+      Register
     </Button>
   );
 };
 
-export default EndcallBtn;
+export default RegisterInterview;
