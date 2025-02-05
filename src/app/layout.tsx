@@ -22,6 +22,22 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "DevView",
   description: "Remote interview platform built for interviewing developers.",
+  openGraph: {
+    title: "DevView - Interview platform for developers!",
+    description:
+      "A dedicated remote interview platform built for interviewing developers",
+    url: "https://dev-view.vercel.app/",
+    siteName: "CasePix",
+    images: [
+      {
+        url: "https://dev-view.vercel.app/dev-view-thumbnail.png",
+        width: 1200,
+        height: 630,
+        alt: "DevView thumbnail",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({
