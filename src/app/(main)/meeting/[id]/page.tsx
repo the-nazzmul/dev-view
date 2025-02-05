@@ -38,10 +38,10 @@ const MeetingPage = () => {
       <BackgroundFiltersProvider
         backgroundFilter="blur"
         backgroundImages={[
-          "http://localhost:3000/bg/library.jpg",
-          "http://localhost:3000/bg/fireplace.jpg",
-          "http://localhost:3000/bg/living-room.jpg",
-          "http://localhost:3000/bg/office.jpg",
+          "https://dev-view.vercel.app/bg/library.jpg",
+          "https://dev-view.vercel.app/bg/fireplace.jpg",
+          "https://dev-view.vercel.app/bg/living-room.jpg",
+          "https://dev-view.vercel.app/bg/office.jpg",
         ]}
       >
         <NoiseCancellationProvider noiseCancellation={noiseCancellation}>
